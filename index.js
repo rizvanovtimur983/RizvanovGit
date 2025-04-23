@@ -1,21 +1,36 @@
-import * as funcs from './utils.js';
+export function findMin(numbers) {
+    if (numbers.length == 0) { return numbers } 
+    return Math.min(...numbers)
+}
 
-const input = document.querySelector('input');
-const form = document.querySelector('form');
-const errorOutput = document.querySelector('.error-output');
-const result = document.querySelector('.result');
+export function calculateSum(numbers) {
+    if (numbers.length == 0) { return 0 } 
+    return numbers.reduce((accumulator, item) => { return accumulator + item }, 0)
+}
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const { value } = input;
-  const calcEquation = funcs.calcEquation || (() => {});
-  const validateEquation = funcs.validateEquation || (() => {});
-  // чтобы не выбросило ошибку, если функции undefined
-  if (validateEquation(value) !== '') {
-    input.classList.add('error');
-  } else {
-    input.classList.remove('error');
+export function getOddNumbers(numbers) {
+    return numbers.filter((number) => { return number % 2 != 0 })
+}
+
+export function getUnion(values1, values2) {
+    return values1.concat(values2)
+}
+
+export function findSmallestElement(nestedArrs) {
+  if (nestedArrs.length === 0) { return [] }
+
+  const flatten = (arr) => {
+    let result = []
+    arr.forEach((item) => {
+      if (Array.isArray(item)) {
+        result.push(...flatten(item))
+      } else {
+        result.push(item)
+      }
+    })
+    return result
   }
-  errorOutput.textContent = validateEquation(value);
-  result.textContent = calcEquation(value);
-});
+
+  const flatNumbers = flatten(nestedArrs)
+  return Math.min(...flatNumbers)
+}
